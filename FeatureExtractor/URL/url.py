@@ -15,5 +15,5 @@ class URL:
         self.domain = DomainPart(parsed_url.netloc)
         self.path = PathPart(parsed_url.path)
         self.query = QueryPart(parse_qs(parsed_url))
-        self.fragment = FragmentPart(parsed_url.fragment)
-        self.file_extension = FileExtensionPart()
+        self.fragment = FragmentPart(parsed_url.fragment, len(url))
+        self.file_extension = FileExtensionPart(parsed_url.path, len(url))
