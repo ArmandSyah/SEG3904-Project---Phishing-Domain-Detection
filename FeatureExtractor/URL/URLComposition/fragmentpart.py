@@ -1,0 +1,2 @@
+class FragmentPart:
+    pass
