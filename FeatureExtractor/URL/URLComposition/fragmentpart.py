@@ -7,15 +7,25 @@ import string
 
 
 class FragmentPart:
-    def __init__(self, fragment, url_len, *args, **kwargs):
+    def __init__(self, fragment: str, url_len, *args, **kwargs):
         self.fragment = fragment
-        self.frag_digit_count = check_digit_count(fragment)
-        self.frag_letter_count = check_letter_count(fragment)
-        self.frag_digit_rate = check_digit_count(fragment) / check_letter_count(fragment)
-        self.frag_len_ratio = len(fragment) / url_len
-        self.frag_unigram_ent = check_unigram_entropy(fragment)
-        self.frag_brigram_ent = check_bigram_entropy(fragment)
-        self.frag_trigram_ent = check_trigram_entropy(fragment)
+
+        if not fragment:
+            self.frag_digit_count = 0
+            self.frag_letter_count = 0
+            self.frag_digit_rate = 0
+            self.frag_len_ratio = 0
+            self.frag_unigram_ent = 0
+            self.frag_brigram_ent = 0
+            self.frag_trigram_ent = 0
+        else:
+            self.frag_digit_count = check_digit_count(fragment)
+            self.frag_letter_count = check_letter_count(fragment)
+            self.frag_digit_rate = check_digit_count(fragment) / check_letter_count(fragment)
+            self.frag_len_ratio = len(fragment) / url_len
+            self.frag_unigram_ent = check_unigram_entropy(fragment)
+            self.frag_brigram_ent = check_bigram_entropy(fragment)
+            self.frag_trigram_ent = check_trigram_entropy(fragment)
 
 def check_letter_count(fragment: str):
     return sum([1 if c in string.ascii_letters else 0 for c in fragment])

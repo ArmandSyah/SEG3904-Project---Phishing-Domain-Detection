@@ -26,7 +26,7 @@ def check_url_delimeter_count(url: str):
     return sum([1 if c in url_delimiters else 0 for c in url])
 
 def check_url_digit_rate(url: str):
-    return check_letter_count(url) / sum([1 if c in string.digits else 0 for c in url])
+    return sum([1 if c in string.digits else 0 for c in url]) /check_letter_count(url)
 
 def check_url_encoded(url: str):
     return '%' in url

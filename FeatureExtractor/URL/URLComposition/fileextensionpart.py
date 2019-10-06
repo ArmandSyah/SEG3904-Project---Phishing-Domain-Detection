@@ -41,13 +41,14 @@ def check_unigram_entropy(file_extension: str):
     return entropy(labels)
 
 def check_trigram_entropy(file_extension: str):
-    bigrams = [file_extension[i:i+2] for i, _ in enumerate(file_extension[0:len(file_extension)-2])]
+    bigrams = [file_extension[i:i+2] for i, _ in enumerate(file_extension[0:len(file_extension)-1])]
+    print(f'bigrams: {bigrams}')
     bigram_counts = Counter(bigrams)
     labels = [count for _, count in bigram_counts.most_common()]
     return entropy(labels)
 
 def check_bigram_entropy(file_extension: str):
-    trigrams = [file_extension[i:i+3] for i, _ in enumerate(file_extension[0:len(file_extension)-3])]
+    trigrams = [file_extension[i:i+3] for i, _ in enumerate(file_extension[0:len(file_extension)-2])]
     trigram_counts = Counter(trigrams)
     labels = [count for _, count in trigram_counts.most_common()]
     return entropy(labels)
