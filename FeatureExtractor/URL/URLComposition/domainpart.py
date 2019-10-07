@@ -18,7 +18,7 @@ def check_letter_count(domain: str):
     return sum([1 if c in string.ascii_letters else 0 for c in domain])
 
 def check_domain_digit_rate(domain: str):
-    return sum([1 if c in string.digits else 0 for c in domain]) / check_letter_count(domain) 
+    return sum([1 if c in string.digits else 0 for c in domain]) / (check_letter_count(domain) if check_letter_count(domain) != 0 else 1)
 
 def check_port_in_domain(domain: str):
     return bool(re.search(':\d+', domain))

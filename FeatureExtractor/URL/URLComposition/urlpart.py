@@ -6,7 +6,7 @@ url_delimiters = ['.', ',', '/', '=', '-', '_']
 
 class URLpart:
     def __init__(self, url):
-        self.url = url
+        self.url = url.geturl()
         self.protocol = url.scheme
         self.port_number = url.port
         self.is_default_port_number = check_default_port(url.port)
@@ -26,7 +26,7 @@ def check_url_delimeter_count(url: str):
     return sum([1 if c in url_delimiters else 0 for c in url])
 
 def check_url_digit_rate(url: str):
-    return sum([1 if c in string.digits else 0 for c in url]) /check_letter_count(url)
+    return sum([1 if c in string.digits else 0 for c in url]) / (check_letter_count(url) if check_letter_count(url) != 0 else 1)
 
 def check_url_encoded(url: str):
     return '%' in url

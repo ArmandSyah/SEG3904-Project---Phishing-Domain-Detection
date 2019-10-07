@@ -1,4 +1,5 @@
 from URL.url import URL
 
-u = URL('http://web.tv/liveCategory/43/language/1/index/changeLanguage/newshared/searchAutoComplete')
-print(u.to_json())
+u = URL('http://us.battle.net.ok.qqweb.asia/login/en/acc.htm')
+import pprint
+pprint.pprint(u.to_json())

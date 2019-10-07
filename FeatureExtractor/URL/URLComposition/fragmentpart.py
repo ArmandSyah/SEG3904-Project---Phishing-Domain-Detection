@@ -21,7 +21,7 @@ class FragmentPart:
         else:
             self.frag_digit_count = check_digit_count(fragment)
             self.frag_letter_count = check_letter_count(fragment)
-            self.frag_digit_rate = check_digit_count(fragment) / check_letter_count(fragment)
+            self.frag_digit_rate = check_digit_count(fragment) / (check_letter_count(fragment) if check_letter_count(fragment) != 0 else 1)
             self.frag_len_ratio = len(fragment) / url_len
             self.frag_unigram_ent = check_unigram_entropy(fragment)
             self.frag_brigram_ent = check_bigram_entropy(fragment)

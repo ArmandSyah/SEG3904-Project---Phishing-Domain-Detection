@@ -10,4 +10,4 @@ def check_letter_count(path: str):
     return sum([1 if c in string.ascii_letters else 0 for c in path])
 
 def check_path_digit_rate(path: str):
-    return  sum([1 if c in string.digits else 0 for c in path]) / check_letter_count(path)
+    return  sum([1 if c in string.digits else 0 for c in path]) / (check_letter_count(path) if check_letter_count(path) != 0 else 1)

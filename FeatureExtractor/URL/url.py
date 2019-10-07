@@ -1,4 +1,3 @@
-import json
 from urllib.parse import urlparse, parse_qs
 
 from URL.URLComposition.domainpart import DomainPart
@@ -20,5 +19,5 @@ class URL:
         self.file_extension = FileExtensionPart(parsed_url.path, len(url))
 
     def to_json(self):
-        return json.dumps(self.__dict__, default=lambda o: o.__dict__, indent=4) 
+        return {k:vars(v) for k, v in vars(self).items()}
     

@@ -10,17 +10,30 @@ class FileExtensionPart:
         super().__init__(*args, **kwargs)
         fx = retrieve_file_extension(path)
         self.file_extension = fx
-        self.fx_digit_count = check_digit_count(fx)
-        self.fx_distinct_char_count = len(set(fx))
-        self.fx_letter_count = check_letter_count(fx)
-        self.fx_digit_rate = check_digit_count(fx) / check_letter_count(fx)
-        self.fx_unigram_ent = check_unigram_entropy(fx)
-        self.fx_brigram_ent = check_bigram_entropy(fx)
-        self.fx_trigram_ent = check_trigram_entropy(fx)
-        self.fx_executable = fx == 'exe'
-        self.fx_len = len(fx)
-        self.fx_len_ratio = len(fx) / url_len
-        # self.fx_proba = ask miguel about it
+
+        if not fx:
+            self.fx_digit_count = 0
+            self.fx_distinct_char_count = 0
+            self.fx_letter_count = 0
+            self.fx_digit_rate = 0
+            self.fx_unigram_ent = 0
+            self.fx_brigram_ent = 0
+            self.fx_trigram_ent = 0
+            self.fx_executable = 0
+            self.fx_len = 0
+            self.fx_len_ratio = 0
+        else:
+            self.fx_digit_count = check_digit_count(fx)
+            self.fx_distinct_char_count = len(set(fx))
+            self.fx_letter_count = check_letter_count(fx)
+            self.fx_digit_rate = check_digit_count(fx) / (check_letter_count(fx) if check_letter_count(fx) != 0 else 1)
+            self.fx_unigram_ent = check_unigram_entropy(fx)
+            self.fx_brigram_ent = check_bigram_entropy(fx)
+            self.fx_trigram_ent = check_trigram_entropy(fx)
+            self.fx_executable = fx == 'exe'
+            self.fx_len = len(fx)
+            self.fx_len_ratio = len(fx) / url_len
+            # self.fx_proba = ask miguel about it
 
 def check_letter_count(fragment: str):
     return sum([1 if c in string.ascii_letters else 0 for c in fragment])
@@ -42,7 +55,6 @@ def check_unigram_entropy(file_extension: str):
 
 def check_trigram_entropy(file_extension: str):
     bigrams = [file_extension[i:i+2] for i, _ in enumerate(file_extension[0:len(file_extension)-1])]
-    print(f'bigrams: {bigrams}')
     bigram_counts = Counter(bigrams)
     labels = [count for _, count in bigram_counts.most_common()]
     return entropy(labels)
