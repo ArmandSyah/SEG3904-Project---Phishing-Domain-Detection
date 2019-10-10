@@ -3,6 +3,7 @@ import numpy as np
 
 from collections import Counter
 from math import log, e
+import re
 import string
 
 
@@ -14,6 +15,7 @@ class FragmentPart:
             self.frag_digit_count = 0
             self.frag_letter_count = 0
             self.frag_digit_rate = 0
+            self.frag_symbol_count = 0
             self.frag_len_ratio = 0
             self.frag_unigram_ent = 0
             self.frag_brigram_ent = 0
@@ -22,6 +24,7 @@ class FragmentPart:
             self.frag_digit_count = check_digit_count(fragment)
             self.frag_letter_count = check_letter_count(fragment)
             self.frag_digit_rate = check_digit_count(fragment) / (check_letter_count(fragment) if check_letter_count(fragment) != 0 else 1)
+            self.frag_symbol_count = check_fragment_symbol_count(fragment)
             self.frag_len_ratio = len(fragment) / url_len
             self.frag_unigram_ent = check_unigram_entropy(fragment)
             self.frag_brigram_ent = check_bigram_entropy(fragment)
@@ -32,6 +35,10 @@ def check_letter_count(fragment: str):
 
 def check_digit_count(fragment: str):
     return sum([1 if c in string.digits else 0 for c in fragment])
+
+def check_fragment_symbol_count(fragment: str):
+    percent_encoded = r'%[0-9a-fA-F]{2}'
+    return len(re.findall(percent_encoded, fragment))
 
 def check_unigram_entropy(fragment: str):
     unigrams = [c for c in fragment]

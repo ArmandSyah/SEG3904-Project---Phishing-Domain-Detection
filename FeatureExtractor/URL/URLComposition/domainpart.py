@@ -10,6 +10,7 @@ class DomainPart:
         self.domain_letter_count = check_letter_count(domain)
         self.domain_digit_rate = check_domain_digit_rate(domain)
         self.is_port_in_domain = check_port_in_domain(domain)
+        self.domain_symbol_count = check_domain_symbol_count(domain)
 
 def check_domain_delimeter_count(domain: str):
     return sum([1 if c in url_delimiters else 0 for c in domain])
@@ -22,3 +23,7 @@ def check_domain_digit_rate(domain: str):
 
 def check_port_in_domain(domain: str):
     return bool(re.search(':\d+', domain))
+
+def check_domain_symbol_count(domain: str):
+    percent_encoded = r'%[0-9a-fA-F]{2}'
+    return len(re.findall(percent_encoded, domain))

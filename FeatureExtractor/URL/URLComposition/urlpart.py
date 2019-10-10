@@ -1,4 +1,5 @@
 import string
+import re
 
 well_known_ports = [1, 5, 7, 18, 20, 21, 22, 23, 25, 29, 37, 42, 43, 49, 53, 69, 70, 79, 80, 103, 108, 109, 110, 115,
 118, 119, 137, 193, 143, 150, 156, 161, 179, 190, 194, 197, 389, 396, 443, 444, 445, 458, 546, 547, 563, 569, 1080]
@@ -14,7 +15,7 @@ class URLpart:
         self.url_delimeter_count = check_url_delimeter_count(url.geturl())
         self.url_digit_rate = check_url_digit_rate(url.geturl())
         self.is_url_encoded = check_url_encoded(url.geturl())
-        # self.url_symbols ask for help later
+        self.url_symbol_count = check_url_symbol_count(url.geturl())
 
 def check_default_port(port: int):
     return port in well_known_ports
@@ -30,3 +31,7 @@ def check_url_digit_rate(url: str):
 
 def check_url_encoded(url: str):
     return '%' in url
+
+def check_url_symbol_count(url: str):
+    percent_encoded = r'%[0-9a-fA-F]{2}'
+    return len(re.findall(percent_encoded, url))

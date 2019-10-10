@@ -3,6 +3,7 @@ import numpy as np
 
 from collections import Counter
 from math import log, e
+import re
 import string
 
 class FileExtensionPart:
@@ -22,6 +23,7 @@ class FileExtensionPart:
             self.fx_executable = 0
             self.fx_len = 0
             self.fx_len_ratio = 0
+            self.fx_symbol_count = 0
         else:
             self.fx_digit_count = check_digit_count(fx)
             self.fx_distinct_char_count = len(set(fx))
@@ -33,6 +35,7 @@ class FileExtensionPart:
             self.fx_executable = fx == 'exe'
             self.fx_len = len(fx)
             self.fx_len_ratio = len(fx) / url_len
+            self.fx_symbol_count = check_fx_symbol_count(fx)
             # self.fx_proba = ask miguel about it
 
 def check_letter_count(fragment: str):
@@ -40,6 +43,10 @@ def check_letter_count(fragment: str):
 
 def check_digit_count(fragment: str):
     return sum([1 if c in string.digits else 0 for c in fragment])
+
+def check_fx_symbol_count(fragment: str):
+    percent_encoded = r'%[0-9a-fA-F]{2}'
+    return len(re.findall(percent_encoded, fragment))
 
 def retrieve_file_extension(path: str):
     path_frags = path.split('/')
