@@ -7,8 +7,7 @@ import re
 import string
 
 class FileExtensionPart:
-    def __init__(self, path, url_len, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, path, url_len, file_extension_probabilites):
         fx = retrieve_file_extension(path)
         self.file_extension = fx
 
@@ -24,6 +23,7 @@ class FileExtensionPart:
             self.fx_len = 0
             self.fx_len_ratio = 0
             self.fx_symbol_count = 0
+            self.fx_proba = file_extension_probabilites['none']
         else:
             self.fx_digit_count = check_digit_count(fx)
             self.fx_distinct_char_count = len(set(fx))
@@ -36,7 +36,7 @@ class FileExtensionPart:
             self.fx_len = len(fx)
             self.fx_len_ratio = len(fx) / url_len
             self.fx_symbol_count = check_fx_symbol_count(fx)
-            # self.fx_proba = ask miguel about it
+            self.fx_proba = file_extension_probabilites[fx] if fx in file_extension_probabilites else 0
 
 def check_letter_count(fragment: str):
     return sum([1 if c in string.ascii_letters else 0 for c in fragment])
@@ -51,8 +51,11 @@ def check_fx_symbol_count(fragment: str):
 def retrieve_file_extension(path: str):
     path_frags = path.split('/')
     file_portion = path_frags[-1]
-    file_extension = file_portion.split('.')[-1]
-    return file_extension
+    if not '.' in file_portion:
+        return None
+    else:
+        file_extension = file_portion.split('.')[-1]
+        return file_extension
 
 def check_unigram_entropy(file_extension: str):
     unigrams = [c for c in file_extension]

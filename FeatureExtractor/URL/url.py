@@ -7,20 +7,18 @@ from .URLComposition.pathpart import PathPart
 from .URLComposition.querypart import QueryPart
 from .URLComposition.urlpart import URLpart
 
-import inspect
-
 
 class URL:
     # is_legit set {-1: undetermined, 0: not legit (phish), 1: legit}
-    def __init__(self, url: str, is_legit: int):
+    def __init__(self, url: str, is_legit: int = -1, file_extension_probabilites: dict = dict()):
         parsed_url = urlparse(url.lower())
         self.url = URLpart(parsed_url)
         self.domain = DomainPart(parsed_url.netloc)
         self.path = PathPart(parsed_url.path)
         self.query = QueryPart(parse_qs(parsed_url.query), parsed_url.query)
         self.fragment = FragmentPart(parsed_url.fragment, len(url))
-        self.file_extension = FileExtensionPart(parsed_url.path, len(url))
-        self.is_legit = is_legit if is_legit else -1
+        self.file_extension = FileExtensionPart(parsed_url.path, len(url), file_extension_probabilites)
+        self.is_legit = is_legit
 
     def to_json(self):
         url_features = {}
