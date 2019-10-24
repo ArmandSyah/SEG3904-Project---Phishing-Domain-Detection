@@ -1,4 +1,6 @@
 import pandas as pd
+import pickle
+
 from pymongo import MongoClient
 from ClassificationModels.DecisionTree import DecisionTree
 from ClassificationModels.RandomForest import RandomForest
@@ -29,12 +31,24 @@ target_variable = df.is_legit
 
 print('Decsion Tree Results:')
 dt = DecisionTree(features, target_variable)
-dt.predict()
+dt.predict_test_set()
 
 print('Random Forest Results:')
 rf = RandomForest(features, target_variable)
-rf.predict()
+rf.predict_test_set()
 
 print('Naive Bayes Results:')
 nb = NaiveBayes(features, target_variable)
-nb.predict()
+nb.predict_test_set()
+
+print('Pickling decision tree')
+with open('BuiltModels\\decision_tree.pkl', 'wb') as decision_tree_output:
+    pickle.dump(dt, decision_tree_output, pickle.HIGHEST_PROTOCOL)
+
+print('Pickling random forest')
+with open('BuiltModels\\random_forest.pkl', 'wb') as random_forest_output:
+    pickle.dump(rf, random_forest_output, pickle.HIGHEST_PROTOCOL)
+
+print('Pickling naive bayes')
+with open('BuiltModels\\naive_bayes.pkl', 'wb') as naive_bayes_output:
+    pickle.dump(nb, naive_bayes_output, pickle.HIGHEST_PROTOCOL)
