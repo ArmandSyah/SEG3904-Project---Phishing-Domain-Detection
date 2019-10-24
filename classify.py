@@ -1,6 +1,8 @@
 import pandas as pd
 from pymongo import MongoClient
 from ClassificationModels.DecisionTree import DecisionTree
+from ClassificationModels.RandomForest import RandomForest
+from ClassificationModels.NaiveBayes import NaiveBayes
 
 # Set up MongoDB connection
 client = MongoClient('localhost', 27017)
@@ -22,12 +24,17 @@ feature_columns.remove('query')
 feature_columns.remove('fragment')
 feature_columns.remove('file_extension')
 
-import pprint
-pprint.pprint(df)
-
 features = df[feature_columns]
 target_variable = df.is_legit
 
+print('Decsion Tree Results:')
 dt = DecisionTree(features, target_variable)
 dt.predict()
 
+print('Random Forest Results:')
+rf = RandomForest(features, target_variable)
+rf.predict()
+
+print('Naive Bayes Results:')
+nb = NaiveBayes(features, target_variable)
+nb.predict()

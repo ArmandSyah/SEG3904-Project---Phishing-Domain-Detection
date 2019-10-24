@@ -9,7 +9,7 @@ class URLpart:
     def __init__(self, url):
         self.url = url.geturl()
         self.protocol = url.scheme
-        self.port_number = url.port
+        self.port_number = url.port if url.port else (80 if url.scheme == 'http' else 443)
         self.is_default_port_number = check_default_port(url.port)
         self.url_letter_count = check_letter_count(url.geturl())
         self.url_delimeter_count = check_url_delimeter_count(url.geturl())
