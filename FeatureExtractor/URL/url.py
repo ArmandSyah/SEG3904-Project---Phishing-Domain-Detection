@@ -1,3 +1,5 @@
+import json
+import os
 from urllib.parse import urlparse, parse_qs
 
 from .URLComposition.domainpart import DomainPart
@@ -7,10 +9,14 @@ from .URLComposition.pathpart import PathPart
 from .URLComposition.querypart import QueryPart
 from .URLComposition.urlpart import URLpart
 
+dirname = os.getcwd()
 
 class URL:
     # is_legit set {-1: undetermined, 0: not legit (phish), 1: legit}
-    def __init__(self, url: str, is_legit: int = -1, file_extension_probabilites: dict = dict()):
+    def __init__(self, url: str, is_legit: int = -1):
+        file_extension = os.path.join(dirname, 'file_probabilities.json')
+        with open(file_extension, 'r', encoding="utf8") as probability_file:
+            file_extension_probabilites = json.load(probability_file)
         parsed_url = urlparse(url.lower())
         self.url = URLpart(parsed_url)
         self.domain = DomainPart(parsed_url.netloc)

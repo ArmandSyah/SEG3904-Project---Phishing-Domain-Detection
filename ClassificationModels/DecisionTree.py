@@ -3,6 +3,6 @@ from sklearn.tree import DecisionTreeClassifier # Import Decision Tree Classifie
 from ClassificationModels.ClassificationModel import ClassificationModel
 
 class DecisionTree(ClassificationModel):
-    def __init__(self, features, target_variable):
+    def __init__(self, features, feature_columns, target_variable):
         clf = DecisionTreeClassifier()
-        super().__init__(features, target_variable, clf)
+        super().__init__(features, feature_columns, target_variable, clf)

@@ -12,6 +12,7 @@ db = client['url_training_data']
 urls = db.urls
 
 df = pd.DataFrame(list(urls.find()))
+df = df.sample(frac=1) #shuffle the rows
 
 one_hot_protocol = pd.get_dummies(df['protocol'], columns=['protocol'])
 df = pd.concat([df, one_hot_protocol], axis=1)
@@ -29,16 +30,17 @@ feature_columns.remove('file_extension')
 features = df[feature_columns]
 target_variable = df.is_legit
 
-print('Decsion Tree Results:')
-dt = DecisionTree(features, target_variable)
+print('\nDecsion Tree Results:')
+dt = DecisionTree(features, feature_columns, target_variable)
 dt.predict_test_set()
 
-print('Random Forest Results:')
-rf = RandomForest(features, target_variable)
+
+print('\nRandom Forest Results:')
+rf = RandomForest(features, feature_columns, target_variable)
 rf.predict_test_set()
 
-print('Naive Bayes Results:')
-nb = NaiveBayes(features, target_variable)
+print('\nNaive Bayes Results:')
+nb = NaiveBayes(features, feature_columns, target_variable)
 nb.predict_test_set()
 
 print('Pickling decision tree')

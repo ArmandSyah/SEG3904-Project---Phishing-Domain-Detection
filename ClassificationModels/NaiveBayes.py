@@ -3,6 +3,6 @@ from sklearn.naive_bayes import GaussianNB
 from ClassificationModels.ClassificationModel import ClassificationModel
 
 class NaiveBayes(ClassificationModel):
-    def __init__(self, features, target_variable):
+    def __init__(self, features, feature_columns, target_variable):
         clf = GaussianNB()
-        super().__init__(features, target_variable, clf)
+        super().__init__(features, feature_columns, target_variable, clf)
