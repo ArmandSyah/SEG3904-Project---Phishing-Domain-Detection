@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split # Import train_test_split function
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
 
@@ -26,4 +27,6 @@ class ClassificationModel:
         url_df['https'] = 1 if url_df.iloc[0]['protocol'] == 'https' else 0
         url_features = url_df[self.feature_columns]
         target_prediction = self.clf.predict(url_features)
-        print(f'Predicted for {url}: {target_prediction[0]}')
+        class_probabilities = self.clf.predict_proba(url_features)
+        print(f'Predicted for {url}: {target_prediction[0]} - Confidence Scores: {class_probabilities}')
+        return (u, target_prediction[0], np.max(class_probabilities))
