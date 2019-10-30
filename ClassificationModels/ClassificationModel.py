@@ -28,5 +28,4 @@ class ClassificationModel:
         url_features = url_df[self.feature_columns]
         target_prediction = self.clf.predict(url_features)
         class_probabilities = self.clf.predict_proba(url_features)
-        print(f'Predicted for {url}: {target_prediction[0]} - Confidence Scores: {class_probabilities}')
         return (u, target_prediction[0], np.max(class_probabilities))
