@@ -4,7 +4,7 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_restful import Api
 
-from API.predict_url import Predict
+from API.predict_url import Predict, PredictList
 
 with open('BuiltModels\\random_forest.pkl', 'rb') as rf_pickle:
     rf = pickle.load(rf_pickle)
@@ -16,6 +16,7 @@ mongo = PyMongo(APP)
 API = Api(APP)
 
 API.add_resource(Predict, '/predict', resource_class_kwargs={'classification_model': rf, 'mongo': mongo})
+API.add_resource(PredictList, '/predictList', resource_class_kwargs={'mongo': mongo})
 
 if __name__ == '__main__':
     APP.run(port=5000)

@@ -11,7 +11,10 @@ client = MongoClient('localhost', 27017)
 db = client['url_training_data']
 urls = db.urls
 
+import pprint
+
 df = pd.DataFrame(list(urls.find()))
+
 df = df.sample(frac=1) #shuffle the rows
 
 one_hot_protocol = pd.get_dummies(df['protocol'], columns=['protocol'])
@@ -33,15 +36,20 @@ target_variable = df.is_legit
 print('\nDecsion Tree Results:')
 dt = DecisionTree(features, feature_columns, target_variable)
 dt.predict_test_set()
-
+dt.predict_url('https://www.reddit.com/r/Games/comments/dmgu22/sources_the_last_of_us_2_delayed_to_spring/')
+dt.predict_url('https://stackoverflow.com/questions/16729574/how-to-get-a-value-from-a-cell-of-a-dataframe')
 
 print('\nRandom Forest Results:')
 rf = RandomForest(features, feature_columns, target_variable)
 rf.predict_test_set()
+rf.predict_url('https://www.reddit.com/r/Games/comments/dmgu22/sources_the_last_of_us_2_delayed_to_spring/')
+rf.predict_url('https://stackoverflow.com/questions/16729574/how-to-get-a-value-from-a-cell-of-a-dataframe')
 
 print('\nNaive Bayes Results:')
 nb = NaiveBayes(features, feature_columns, target_variable)
 nb.predict_test_set()
+nb.predict_url('https://www.reddit.com/r/Games/comments/dmgu22/sources_the_last_of_us_2_delayed_to_spring/')
+nb.predict_url('https://stackoverflow.com/questions/16729574/how-to-get-a-value-from-a-cell-of-a-dataframe')
 
 print('Pickling decision tree')
 with open('BuiltModels\\decision_tree.pkl', 'wb') as decision_tree_output:

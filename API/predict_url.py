@@ -12,8 +12,17 @@ class Predict(Resource):
     def post(self):
         args = Predict.parser.parse_args()
         url = args['url']
+        print(f'url: {url}')
         (u, predicted_result, confidence_score) = self.classification_model.predict_url(url)
         u['is_legit'] = int(predicted_result)
         u['confidence_score'] = confidence_score
         self.mongo.db.url.insert(u)
         return jsonify({'url': url, 'predicted result': 'legit' if predicted_result == 1 else 'phish', 'confidence_score': confidence_score})
+
+class PredictList(Resource):
+    def __init__(self, **kwargs):
+        self.mongo = kwargs['mongo']
+
+    def delete(self):
+        self.mongo.db.url.delete_many({})
+        return 'Delete Successful',201
