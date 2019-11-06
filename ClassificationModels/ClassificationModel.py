@@ -26,9 +26,17 @@ class ClassificationModel:
 
     def predict_test_set(self):
         target_predictions = self.clf.predict(self.features_test)
-        print(f"Accuracy: {metrics.accuracy_score(self.target_test, target_predictions)}")
-        print(f"Precision: {metrics.precision_score(self.target_test, target_predictions)}")
-        print(f"Recall: {metrics.recall_score(self.target_test, target_predictions)}")
+        feature_predictions = self.clf.predict(self.features_train)
+        print(f"Train Accuracy: {metrics.accuracy_score(self.target_train, feature_predictions)}")
+        print(f"Train Precision: {metrics.precision_score(self.target_train, feature_predictions)}")
+        print(f"Train Recall: {metrics.recall_score(self.target_train, feature_predictions)}")
+        print(f"Test Accuracy: {metrics.accuracy_score(self.target_test, target_predictions)}")
+        print(f"Test Precision: {metrics.precision_score(self.target_test, target_predictions)}")
+        print(f"Test Recall: {metrics.recall_score(self.target_test, target_predictions)}")
+        print(f"\nTrain Confusion Matrix: \n {metrics.confusion_matrix(self.target_train, feature_predictions)}")
+        print(f"\nTest Confusion Matrix: \n {metrics.confusion_matrix(self.target_test, target_predictions)}")
+        print(f"\nTrain Label Count Actual:\n{self.target_train.value_counts()}")
+        print(f"\nTest Label Count Actual:\n{self.target_test.value_counts()}")
 
     def predict_url(self, url):
         u = URL(url).to_json()
@@ -38,5 +46,13 @@ class ClassificationModel:
         url_features = url_df[self.feature_columns]
         target_prediction = self.clf.predict(url_features)
         class_probabilities = self.clf.predict_proba(url_features)
-        print(f'Predictions for {url}: {target_prediction}')
+        print(f'Predictions for {url}: {target_prediction[0]}')
         return (u, target_prediction[0], np.max(class_probabilities))
+
+    def fit_classifier(self, url, label):
+        u = URL(url).to_json()
+        url_df = pd.DataFrame.from_records([u])
+        url_df['http'] = 1 if url_df.iloc[0]['protocol'] == 'http' else 0
+        url_df['https'] = 1 if url_df.iloc[0]['protocol'] == 'https' else 0
+        url_features = url_df[self.feature_columns]
+        self.clf.fit(url_features, [label])
