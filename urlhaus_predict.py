@@ -12,8 +12,6 @@ with open(urlhaus_urls, 'r', encoding='utf8') as phish_file:
 with open(legit_urls, 'r', encoding='utf8') as legit_file:
     l_u = [line.rstrip() for line in legit_file]
 
-print(l_u)
-
 correct, incorrect = 0,0
 
 for u in phish_urls:

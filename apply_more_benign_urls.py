@@ -16,7 +16,7 @@ with open(legit_url_data, 'r', encoding="utf8") as legit_file:
     next(csvreader, None)
 
     data_list = list(csvreader)
-    for row in data_list[:5000]:
-        rf.fit_classifier(row[1], 1)
+    for row in data_list[:150000]:
+            rf.fit_classifier(row[1], 1)
 
 print('Complete')

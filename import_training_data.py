@@ -11,6 +11,7 @@ dirname = os.getcwd()
 
 phish_url_data = os.path.join(dirname, 'Datasets\\retrieved_phish_urls.txt')
 legit_url_data = os.path.join(dirname, 'Datasets\\Benign_list_big_final.csv')
+more_legit_url_data = os.path.join(dirname, 'Datasets\\urldata.csv')
 
 # Set up MongoDB connection
 client = MongoClient('localhost', 27017)
@@ -31,6 +32,13 @@ with open(legit_url_data, 'r', encoding="utf8") as legit_file:
 
     for row in csvreader:
         legit_urls.append(row[0])
+
+with open(more_legit_url_data, 'r', encoding='utf8') as more_legit_file:
+    csvreader = csv.reader(more_legit_file)
+
+    data_list = list(csvreader)
+    for row in data_list[:50000]:
+        legit_urls.append(row[1])
 
 num_legit_urls = len(legit_urls)
 num_phish_urls = len(phish_urls) if len(phish_urls) <= len(legit_urls) else len(legit_urls)

@@ -29,7 +29,6 @@ rf.predict_url('https://www.statisticshowto.datasciencecentral.com/probability-a
 # Not Legit
 rf.predict_url('https://qiita.com/UEFA-Europa-LeaguS/items/5c4ed0ed45b104eb877a')
 rf.predict_url('https://www439.promocao-master.club/pt-psl6208734115db/smart-tv-led-40-samsung-ultra-hd-4k-40nu7100-com-conversor-digital-3-hdmi-2-usb-wi-fi-hdr-premium-smart-tizen/133756442/pr')
-rf.predict_url('https://www.youtube.com/watch?v=sCqPKad1aCI')
 rf.predict_test_set()
 
 # print('\nNaive Bayes Results\n')

@@ -12,17 +12,17 @@ class ClassificationModel:
         self.feature_columns = feature_columns
         self.target_variable = target_variables
 
-        selector = SelectKBest(chi2, k=10)
+        selector = SelectKBest(chi2, k=30)
         selector.fit(self.features, self.target_variable)
 
         cols = selector.get_support(indices=True)
         self.features = self.features.iloc[:,cols]
         self.feature_columns = [self.feature_columns[c] for c in cols]
 
-        cv = KFold(n_splits=10, random_state=42, shuffle=False)
-        for train_index, test_index in cv.split(self.features):
-            self.features_train, self.features_test, self.target_train, self.target_test = self.features.iloc[train_index], self.features.iloc[test_index], self.target_variable.iloc[train_index], self.target_variable.iloc[test_index]
-            self.clf = classifier.fit(self.features_train, self.target_train)
+        print(f'selected features: {feature_columns}')
+
+        self.features_train, self.features_test, self.target_train, self.target_test = train_test_split(self.features, self.target_variable, test_size=.4, random_state=42)
+        self.clf = classifier.fit(self.features_train, self.target_train)
 
     def predict_test_set(self):
         target_predictions = self.clf.predict(self.features_test)
