@@ -12,17 +12,17 @@ with open(urlhaus_urls, 'r', encoding='utf8') as phish_file:
 with open(legit_urls, 'r', encoding='utf8') as legit_file:
     l_u = [line.rstrip() for line in legit_file]
 
-correct, incorrect = 0,0
+# correct, incorrect = 0,0
 
-for u in phish_urls:
-    response = requests.post('http://127.0.0.1:5000/predict', data={'url': u})
-    json_r = response.json()
-    result = json_r['predicted result']
-    correct = correct + 1 if result == 'phish' else correct
-    incorrect = incorrect + 1 if result == 'legit' else incorrect
+# for u in phish_urls:
+#     response = requests.post('http://127.0.0.1:5000/predict', data={'url': u})
+#     json_r = response.json()
+#     result = json_r['predicted result']
+#     correct = correct + 1 if result == 'phish' else correct
+#     incorrect = incorrect + 1 if result == 'legit' else incorrect
 
-print(f'\nCorrect Phish Classifications: {correct} out of {len(phish_urls)} - {(correct/len(phish_urls))*100}%')
-print(f'\nIncorrect Phish Classifications: {incorrect} out of {len(phish_urls)} - {(incorrect/len(phish_urls))*100}%')
+# print(f'\nCorrect Phish Classifications: {correct} out of {len(phish_urls)} - {(correct/len(phish_urls))*100}%')
+# print(f'\nIncorrect Phish Classifications: {incorrect} out of {len(phish_urls)} - {(incorrect/len(phish_urls))*100}%')
 
 correct, incorrect = 0,0
 
