@@ -13,10 +13,10 @@ Windows 10 Prefered
 ### Setting up virtualenv
 1. Install virtualenv by typing 'pip install virtualenv' on the command line
 2. Next, install virtualenvwrapper-win by typing 'pip install virtualenvwrapper-win' on the command line
-3. Make a virtual environment, by typing 'mkvirtualenv <name of virtualnev>'
-4. The virtual environment should be activated, indicated by the '(search)' on the left side of prompt
+3. Make a virtual environment, by typing 'mkvirtualenv [name of virtualenv]'
+4. The virtual environment should be activated, indicated by the '[name of virtualenv]' on the left side of prompt
     - You can deactivate the virtual environment by typing 'deactivate'
-    - If you want to go back to the virtual environment type 'workon search'
+    - If you want to go back to the virtual environment type 'workon [name of virtualenv]'
 
 ### Installing packages
 1. Change Directory to the root of this project (ex: C:\Users\Armand Syahtama\Documents\SEG3904-Project---Phishing-Domain-Detection) 
