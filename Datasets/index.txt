@@ -1,6 +1,0 @@
-The datasets collected for this project
-
-opendns-top-domains.txt: A list of 10000 top domains OpenDNS receives queries for (from https://github.com/shramos/Awesome-Cybersecurity-Datasets)
-top-1m.csv.zip: CSV dataset of most popular sites by alexa (from https://github.com/shramos/Awesome-Cybersecurity-Datasets)
-verified_online.json.gz: JSON list of phish urls retrieved from PhishTank on September 25th (from https://www.phishtank.com/developer_info.php)
-retrieved_phish_urls: The URLs from verified_online.json from the first 500 entries 
